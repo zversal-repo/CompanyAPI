@@ -1,5 +1,7 @@
 package com.zversal.api.service;
 
+import java.util.Collection;
+
 import org.bson.Document;
 
 public interface CompanyInfoService {

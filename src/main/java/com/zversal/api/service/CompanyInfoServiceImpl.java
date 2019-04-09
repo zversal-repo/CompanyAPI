@@ -2,8 +2,10 @@ package com.zversal.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bson.Document;
 import org.springframework.stereotype.Service;
+
 import com.mongodb.client.MongoCursor;
 import com.zversal.api.database.DataAccessorImpl;
 
@@ -29,9 +31,8 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 	}
 
 	public Document getEarningData(String ticker) {
-		// final String[] keys = { "ZN3", "ZN1", "Z2B" };
-		final String[] include = { "Ticker", "ZN3.mostRecentQTRSurprise%", "ZN3.threeQTRPriorEndDate",
-				"ZN3.actualEPSRecentQTR", "ZN3.mostRecentQTRDifference", "ZN3.oneQTRPriorEndDate", "ZN3.twoQTRPriorEPS",
+		final String[] include = { "ZN3.mostRecentQTRSurprise%", "ZN3.threeQTRPriorEndDate", "ZN3.actualEPSRecentQTR",
+				"ZN3.mostRecentQTRDifference", "ZN3.oneQTRPriorEndDate", "ZN3.twoQTRPriorEPS",
 				"ZN3.threeQTRPriorSurprise%", "ZN3.twoQTRPriorSurprise%", "ZN3.actualEPSThreeQTR", "ZN3.oneQTRPriorEPS",
 				"ZN3.oneQTRPriorSurprise%", "ZN3.company", "ZN3.actualEPSOneQTR", "ZN3.threeQTR_EPS",
 				"ZN3.mostRecentQTREndDate", "ZN3.twoQTRPriorEndDate", "ZN3.twoQTRPriorDiffernce",
@@ -52,15 +53,15 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 	}
 
 	public Document getSnapshot(String ticker) {
-		final String[] include = { "Ticker", "CZ3", "ZK3.marketCap", "CZ1.totalEmployees", "CZ2.country", "CZ2.zipCode",
-				"CZ2.city", "CZ2.fiscalYearEnd", "CZ2.expandedIndustry", "CZ2.company", "CZ2.state", "CZ2.fax",
-				"CZ2.email", "CZ2.address2", "CZ2.address1", "CZ2.titleOfOfficer1", "CZ2.titleOfOfficer2",
+		final String[] include = { "CZ3.companyDescription", "ZK3.marketCap", "CZ1.totalEmployees", "CZ2.country",
+				"CZ2.zipCode", "CZ2.city", "CZ2.fiscalYearEnd", "CZ2.expandedIndustry", "CZ2.company", "CZ2.state",
+				"CZ2.fax", "CZ2.email", "CZ2.address2", "CZ2.address1", "CZ2.titleOfOfficer1", "CZ2.titleOfOfficer2",
 				"CZ2.titleOfOfficer5", "CZ2.phone", "CZ2.titleOfOfficer3", "CZ2.titleOfOfficer4",
 				"CZ2.executiveOfficer5", "CZ2.executiveOfficer4", "CZ2.executiveOfficer3", "CZ2.executiveOfficer2",
 				"CZ2.lastModified", "CZ2.executiveOfficer1" };
 
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
-		return doc;
+		return new Document("Earning", doc.values());
 	}
 
 	public Document getAnalystCoverage(String ticker) {
