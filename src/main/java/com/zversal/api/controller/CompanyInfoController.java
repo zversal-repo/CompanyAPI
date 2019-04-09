@@ -14,11 +14,11 @@ import com.zversal.api.service.CompanyInfoServiceImpl;
 @RequestMapping("/companyinfo")
 public class CompanyInfoController {
 	@Autowired
-	private CompanyInfoServiceImpl infoServ;
+	private CompanyInfoServiceImpl companyInfoService;
 
 	@RequestMapping(value = "/data/{Ticker}", method = RequestMethod.GET)
 	public Document getData(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc = infoServ.getData(ticker);
+		Document doc = companyInfoService.getData(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
@@ -30,7 +30,7 @@ public class CompanyInfoController {
 
 	@RequestMapping(value = "/gettickers/{Channel}", method = RequestMethod.GET)
 	public Document getTicker(@PathVariable("Channel") String channel,HttpServletResponse response) {
-		Document doc = infoServ.getTicker(channel);
+		Document doc = companyInfoService.getTicker(channel);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Channel");
@@ -42,7 +42,7 @@ public class CompanyInfoController {
 
 	@RequestMapping(value = "/earnings/{Ticker}", method = RequestMethod.GET)
 	public Document getEarningData(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc = infoServ.getEarningData(ticker);
+		Document doc = companyInfoService.getEarningData(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
@@ -54,7 +54,7 @@ public class CompanyInfoController {
 
 	@RequestMapping(value = "/snapshot/{Ticker}", method = RequestMethod.GET)
 	public Document getSnapshot(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc = infoServ.getSnapshot(ticker);
+		Document doc = companyInfoService.getSnapshot(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
@@ -66,7 +66,7 @@ public class CompanyInfoController {
 
 	@RequestMapping(value = "/analystcoverage/{Ticker}", method = RequestMethod.GET)
 	public Document getAnalyst(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc = infoServ.getAnalystCoverage(ticker);
+		Document doc =companyInfoService.getAnalystCoverage(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
