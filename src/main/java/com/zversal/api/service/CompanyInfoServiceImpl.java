@@ -9,15 +9,15 @@ import com.zversal.api.database.DataAccessorImpl;
 
 @Service
 public class CompanyInfoServiceImpl implements CompanyInfoService {
-	private DataAccessorImpl dataAccess = new DataAccessorImpl();
+	private DataAccessorImpl dataAccessor = new DataAccessorImpl();
 
 	public Document getData(String ticker) {
-		Document doc = dataAccess.findDocwithTicker(ticker).first();
+		Document doc = dataAccessor.findDocwithTicker(ticker).first();
 		return doc;
 	}
 
 	public Document getTicker(String channel) {
-		MongoCursor<Document> itr = dataAccess.findDocWithChannel(channel).iterator();
+		MongoCursor<Document> itr = dataAccessor.findDocWithChannel(channel).iterator();
 		List<Object> listDoc = new ArrayList<>();
 		Document doc = new Document();
 		while (itr.hasNext()) {
@@ -47,7 +47,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"Z2B.KEY 11", "Z2B.KEY 12", "Z2B.KEY 13", "Z2B.KEY 14", "Z2B.KEY 15", "Z2B.KEY 16", "Z2B.KEY 17",
 				"Z2B.KEY 18", "Z2B.KEY 19", "Z2B.KEY 20", "Z2B.KEY 21", "Z2B.KEY 22", "Z2B.KEY 23", "Z2B.KEY 24" };
 
-		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
+		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
@@ -59,7 +59,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"CZ2.executiveOfficer5", "CZ2.executiveOfficer4", "CZ2.executiveOfficer3", "CZ2.executiveOfficer2",
 				"CZ2.lastModified", "CZ2.executiveOfficer1" };
 
-		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
+		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
@@ -74,7 +74,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"ZN5.noOfModerateSell1Month", "ZN5.noOfStrongBuyRatings2Month", "ZN5.noOfHoldRatingsCurrent",
 				"ZN5.noOfStrongSellRatings2Month", "ZN5.meanRatingCurrent" };
 
-		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
+		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
