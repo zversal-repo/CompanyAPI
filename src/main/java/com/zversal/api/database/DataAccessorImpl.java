@@ -22,7 +22,7 @@ public class DataAccessorImpl implements DataAccessor {
 	}
 
 	@Override
-	public FindIterable<Document> FindDocWithProjection(String ticker, String[] include) {
+	public FindIterable<Document> FindDocWithTickerAndProjection(String ticker, String[] include) {
 		FindIterable<Document> doc = collection.find(new Document("Ticker", ticker))
 				.projection(Projections.fields(Projections.include(include), Projections.excludeId()));
 		return doc;

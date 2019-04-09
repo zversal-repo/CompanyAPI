@@ -64,5 +64,4 @@ public class ConfigProperties implements EnvironmentAware {
 		}
 		return collectionName;
 	}
-
 }

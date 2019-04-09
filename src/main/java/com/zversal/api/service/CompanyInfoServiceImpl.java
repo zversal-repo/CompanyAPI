@@ -30,8 +30,8 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 
 	public Document getEarningData(String ticker) {
 		// final String[] keys = { "ZN3", "ZN1", "Z2B" };
-		final String[] include = { "ZN3.mostRecentQTRSurprise%", "ZN3.threeQTRPriorEndDate", "ZN3.actualEPSRecentQTR",
-				"ZN3.mostRecentQTRDifference", "ZN3.oneQTRPriorEndDate", "ZN3.twoQTRPriorEPS",
+		final String[] include = { "Ticker", "ZN3.mostRecentQTRSurprise%", "ZN3.threeQTRPriorEndDate",
+				"ZN3.actualEPSRecentQTR", "ZN3.mostRecentQTRDifference", "ZN3.oneQTRPriorEndDate", "ZN3.twoQTRPriorEPS",
 				"ZN3.threeQTRPriorSurprise%", "ZN3.twoQTRPriorSurprise%", "ZN3.actualEPSThreeQTR", "ZN3.oneQTRPriorEPS",
 				"ZN3.oneQTRPriorSurprise%", "ZN3.company", "ZN3.actualEPSOneQTR", "ZN3.threeQTR_EPS",
 				"ZN3.mostRecentQTREndDate", "ZN3.twoQTRPriorEndDate", "ZN3.twoQTRPriorDiffernce",
@@ -47,23 +47,24 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"Z2B.KEY 11", "Z2B.KEY 12", "Z2B.KEY 13", "Z2B.KEY 14", "Z2B.KEY 15", "Z2B.KEY 16", "Z2B.KEY 17",
 				"Z2B.KEY 18", "Z2B.KEY 19", "Z2B.KEY 20", "Z2B.KEY 21", "Z2B.KEY 22", "Z2B.KEY 23", "Z2B.KEY 24" };
 
-		Document doc = dataAccess.FindDocWithProjection(ticker, include).first();
+		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
 	public Document getSnapshot(String ticker) {
-		final String[] include = { "CZ3", "ZK3.marketCap", "CZ1.totalEmployees", "CZ2.country", "CZ2.zipCode",
+		final String[] include = { "Ticker", "CZ3", "ZK3.marketCap", "CZ1.totalEmployees", "CZ2.country", "CZ2.zipCode",
 				"CZ2.city", "CZ2.fiscalYearEnd", "CZ2.expandedIndustry", "CZ2.company", "CZ2.state", "CZ2.fax",
 				"CZ2.email", "CZ2.address2", "CZ2.address1", "CZ2.titleOfOfficer1", "CZ2.titleOfOfficer2",
 				"CZ2.titleOfOfficer5", "CZ2.phone", "CZ2.titleOfOfficer3", "CZ2.titleOfOfficer4",
 				"CZ2.executiveOfficer5", "CZ2.executiveOfficer4", "CZ2.executiveOfficer3", "CZ2.executiveOfficer2",
 				"CZ2.lastModified", "CZ2.executiveOfficer1" };
-		Document doc = dataAccess.FindDocWithProjection(ticker, include).first();
+
+		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
 	public Document getAnalystCoverage(String ticker) {
-		final String[] include = { "ZN5.meanRating1Month", "ZN5.noOfStrongSellRatings3Month",
+		final String[] include = { "Ticker", "ZN5.meanRating1Month", "ZN5.noOfStrongSellRatings3Month",
 				"ZN5.noOfModerateSell3Month", "ZN5.meanRating2Month", "ZN5.meanRating3Month",
 				"ZN5.noOfHoldRatings2Month", "ZN5.noOfModerateSell2Month", "ZN5.noOfModerateBuyRatings1Month",
 				"ZN5.noOfModerateBuyRatings3Month", "ZN5.noOfStrongBuyRatings3Month",
@@ -72,7 +73,8 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"ZN5.noOfStrongBuyRatings1Month", "ZN5.noOfModerateBuyRatingsCurrent", "ZN5.noOfModerateSellCurrent",
 				"ZN5.noOfModerateSell1Month", "ZN5.noOfStrongBuyRatings2Month", "ZN5.noOfHoldRatingsCurrent",
 				"ZN5.noOfStrongSellRatings2Month", "ZN5.meanRatingCurrent" };
-		Document doc = dataAccess.FindDocWithProjection(ticker, include).first();
+
+		Document doc = dataAccess.FindDocWithTickerAndProjection(ticker, include).first();
 		return doc;
 	}
 
