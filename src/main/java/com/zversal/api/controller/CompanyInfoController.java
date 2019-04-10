@@ -54,8 +54,8 @@ public class CompanyInfoController {
 	}
 
 	@RequestMapping(value = "/snapshot/{Ticker}", method = RequestMethod.GET)
-	public Document getSnapshot(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc = companyInfoService.getSnapshot(ticker);
+	public Object getSnapshot(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
+		Object doc = companyInfoService.getSnapshot(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");

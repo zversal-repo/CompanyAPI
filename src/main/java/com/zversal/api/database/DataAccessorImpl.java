@@ -16,8 +16,9 @@ public class DataAccessorImpl implements DataAccessor {
 	}
 
 	@Override
-	public FindIterable<Document> findDocWithChannel(String channel) {
-		FindIterable<Document> doc = collection.find(new Document("Channel", channel));
+	public FindIterable<Document> findDocWithChannelAndProjection(String channel, String include) {
+		FindIterable<Document> doc = collection.find(new Document("Channel", channel))
+				.projection(Projections.fields(Projections.include(include), Projections.excludeId()));
 		return doc;
 	}
 

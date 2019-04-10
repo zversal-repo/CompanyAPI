@@ -2,10 +2,9 @@ package com.zversal.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.regex.Pattern;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
-
 import com.mongodb.client.MongoCursor;
 import com.zversal.api.database.DataAccessorImpl;
 
@@ -19,12 +18,13 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 	}
 
 	public Document getTicker(String channel) {
-		MongoCursor<Document> itr = dataAccessor.findDocWithChannel(channel).iterator();
+		MongoCursor<Document> itr = dataAccessor.findDocWithChannelAndProjection(channel, "Ticker").iterator();
 		List<Object> listDoc = new ArrayList<>();
 		Document doc = new Document();
 		while (itr.hasNext()) {
-			Document mdoc = itr.next();
-			listDoc.add(mdoc.get("Ticker"));
+			doc = itr.next();
+			// oc.append("Ticker",doc.values());
+			listDoc.add(doc.get("Ticker"));
 		}
 		doc.put("Ticker", listDoc);
 		return doc;
@@ -49,10 +49,19 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"Z2B.KEY 18", "Z2B.KEY 19", "Z2B.KEY 20", "Z2B.KEY 21", "Z2B.KEY 22", "Z2B.KEY 23", "Z2B.KEY 24" };
 
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
-		return doc;
+		Document modifiedDoc = new Document();
+		if (doc != null) {
+			for (int i = 0; i < 71; i++) {
+				String[] parts = include[i].split(Pattern.quote("."));
+				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
+			}
+			return modifiedDoc;
+		} else {
+			return doc;
+		}
 	}
 
-	public Document getSnapshot(String ticker) {
+	public Object getSnapshot(String ticker) {
 		final String[] include = { "CZ3.companyDescription", "ZK3.marketCap", "CZ1.totalEmployees", "CZ2.country",
 				"CZ2.zipCode", "CZ2.city", "CZ2.fiscalYearEnd", "CZ2.expandedIndustry", "CZ2.company", "CZ2.state",
 				"CZ2.fax", "CZ2.email", "CZ2.address2", "CZ2.address1", "CZ2.titleOfOfficer1", "CZ2.titleOfOfficer2",
@@ -61,11 +70,20 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"CZ2.lastModified", "CZ2.executiveOfficer1" };
 
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
-		return new Document("Earning", doc.values());
+		Document modifiedDoc = new Document();
+		if (doc != null) {
+			for (int i = 0; i < 26; i++) {
+				String[] parts = include[i].split(Pattern.quote("."));
+				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
+			}
+			return modifiedDoc;
+		} else {
+			return doc;
+		}
 	}
 
 	public Document getAnalystCoverage(String ticker) {
-		final String[] include = { "Ticker", "ZN5.meanRating1Month", "ZN5.noOfStrongSellRatings3Month",
+		final String[] include = { "ZN5.meanRating1Month", "ZN5.noOfStrongSellRatings3Month",
 				"ZN5.noOfModerateSell3Month", "ZN5.meanRating2Month", "ZN5.meanRating3Month",
 				"ZN5.noOfHoldRatings2Month", "ZN5.noOfModerateSell2Month", "ZN5.noOfModerateBuyRatings1Month",
 				"ZN5.noOfModerateBuyRatings3Month", "ZN5.noOfStrongBuyRatings3Month",
@@ -76,7 +94,16 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 				"ZN5.noOfStrongSellRatings2Month", "ZN5.meanRatingCurrent" };
 
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
-		return doc;
+		Document modifiedDoc = new Document();
+		if (doc != null) {
+			for (int i = 0; i < 24; i++) {
+				String[] parts = include[i].split(Pattern.quote("."));
+				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
+			}
+			return modifiedDoc;
+		} else {
+			return doc;
+		}
 	}
 
 }
