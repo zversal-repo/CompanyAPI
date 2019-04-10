@@ -51,7 +51,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		Document modifiedDoc = new Document();
 		if (doc != null) {
-			for (int i = 0; i < 71; i++) {
+			for (int i = 0; i < include.length; i++) {
 				String[] parts = include[i].split(Pattern.quote("."));
 				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
 			}
@@ -72,7 +72,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		Document modifiedDoc = new Document();
 		if (doc != null) {
-			for (int i = 0; i < 26; i++) {
+			for (int i = 0; i < include.length; i++) {
 				String[] parts = include[i].split(Pattern.quote("."));
 				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
 			}
@@ -96,7 +96,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 		Document doc = dataAccessor.FindDocWithTickerAndProjection(ticker, include).first();
 		Document modifiedDoc = new Document();
 		if (doc != null) {
-			for (int i = 0; i < 24; i++) {
+			for (int i = 0; i < include.length; i++) {
 				String[] parts = include[i].split(Pattern.quote("."));
 				modifiedDoc.put(parts[1], ((Document) doc.get(parts[0])).get(parts[1]));
 			}
