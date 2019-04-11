@@ -1,7 +1,5 @@
 package com.zversal.api.controller;
 
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletResponse;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ public class CompanyInfoController {
 	private CompanyInfoServiceImpl companyInfoService;
 
 	@RequestMapping(value = "/data/{Ticker}", method = RequestMethod.GET)
-	public Document getData(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
+	public Document getData(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
 		Document doc = companyInfoService.getData(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -30,7 +28,7 @@ public class CompanyInfoController {
 	}
 
 	@RequestMapping(value = "/gettickers/{Channel}", method = RequestMethod.GET)
-	public Document getTicker(@PathVariable("Channel") String channel,HttpServletResponse response) {
+	public Document getTicker(@PathVariable("Channel") String channel, HttpServletResponse response) {
 		Document doc = companyInfoService.getTicker(channel);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -41,8 +39,15 @@ public class CompanyInfoController {
 		}
 	}
 
+	/**
+	 * This method will be used to get snapshot
+	 * 
+	 * @param ticker the unique id of the Document
+	 * @return an instance of {@link ComapnyInfoModel} but contains only those
+	 *         fields describe in {@link SnapshotApi} as abstract methods
+	 */
 	@RequestMapping(value = "/earnings/{Ticker}", method = RequestMethod.GET)
-	public Document getEarningData(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
+	public Document getEarningData(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
 		Document doc = companyInfoService.getEarningData(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -54,8 +59,8 @@ public class CompanyInfoController {
 	}
 
 	@RequestMapping(value = "/snapshot/{Ticker}", method = RequestMethod.GET)
-	public Object getSnapshot(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Object doc = companyInfoService.getSnapshot(ticker);
+	public Document getSnapshot(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
+		Document doc = companyInfoService.getSnapshot(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
@@ -66,8 +71,8 @@ public class CompanyInfoController {
 	}
 
 	@RequestMapping(value = "/analystcoverage/{Ticker}", method = RequestMethod.GET)
-	public Document getAnalyst(@PathVariable("Ticker") String ticker,HttpServletResponse response) {
-		Document doc =companyInfoService.getAnalystCoverage(ticker);
+	public Document getAnalyst(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
+		Document doc = companyInfoService.getAnalystCoverage(ticker);
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
