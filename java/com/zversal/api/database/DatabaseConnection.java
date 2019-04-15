@@ -7,11 +7,19 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
 import com.zversal.api.configuration.ConfigProperties;
-
+/**
+ * This class is used to make Mongodb Connection and for database configuration
+ * @author bhupinder
+ */
 public class DatabaseConnection {
 	private ConfigProperties configproperties = new ConfigProperties();
 	private MongoCollection<Document> collection = null;
+	private MongoCollection<Document> userCollection = null;
     private MongoClient mongoClient=null;
+    
+	/**
+	 * This method is used to create MongoClient instance and set Database and Collection.
+	 */
 	public void connection() {
 		System.out.println("CONNECTING MONGODB");
 		String databaseName = configproperties.getDatabaseName();
@@ -22,6 +30,7 @@ public class DatabaseConnection {
 			MongoDatabase database = mongoClient.getDatabase(databaseName);
 			checkDatabase(mongoClient, databaseName);
 			collection = database.getCollection(collectionName);
+			userCollection= database.getCollection("Users");
 			checkCollection(database, collectionName);
 		} catch (IllegalArgumentException iae) {
 			System.out.println("Database name is invalid");
@@ -30,11 +39,25 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * This method is used to get Collection 
+	 * @return Collection
+	 */
 	public MongoCollection<Document> getCollections() {
 		connection();
 		return collection;
 	}
+	public MongoCollection<Document> getUsersCollections(){
+		connection();
+		return userCollection;
+	}
 
+	/**
+	 * This method is used to check if Collection is available in database or not.
+	 * @param database - MongoDatabase
+	 * @param collectionName - Collection Name of type String
+	 *
+	 */
 	private void checkCollection(MongoDatabase database, String collectionName) {
 		boolean checkcol = false;
 		MongoIterable<String> collections = database.listCollectionNames();
@@ -48,7 +71,12 @@ public class DatabaseConnection {
 			System.exit(1);
 		}
 	}
-
+	/**
+	 * This method is used to check if Database with name given in parameter is available or not.
+	 * @param mongoClient - Instance of MongoClient
+	 * @param databaseName- Database name of type String
+	 *
+	 */
 	private void checkDatabase(MongoClient mongoClient, String databaseName) {
 		boolean checkDB = false;
 		MongoIterable<String> databases = mongoClient.listDatabaseNames();

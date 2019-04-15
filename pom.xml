@@ -29,6 +29,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
 <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync -->
 <dependency>
@@ -36,6 +42,8 @@
     <artifactId>mongodb-driver-sync</artifactId>
     <version>3.10.1</version>
 </dependency>
+<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+
 
 <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->
 <dependency>

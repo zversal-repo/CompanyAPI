@@ -5,18 +5,27 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-
+/**
+ * This class is used for database configuration. It implements {@link EnvironmentAware} . EnvironmentAware ia an  Interface to be implemented by any bean that wishes to be notified of the Environment that it runs in.
+ * @author bhupinder 
+ */
 @Configuration
 @PropertySource("classpath:mongo.properties")
 public class ConfigProperties implements EnvironmentAware {
 	@Autowired
 	private static Environment env;
-
+   
+	/**
+	 *Set the Environment that is Component runs in.
+	 */
 	@Override
 	public void setEnvironment(final Environment environment) {
 		ConfigProperties.env = environment;
 	}
-
+	/**
+	 *reads the database name from property file
+	 *@return database Name as a String
+	 */
 	public String getDatabaseName() {
 		String databasename = null;
 		try {
@@ -32,7 +41,10 @@ public class ConfigProperties implements EnvironmentAware {
 		}
 		return databasename;
 	}
-
+	/**
+	 *reads the Uri from property file
+	 *@return uri as a String
+	 */
 	public String getUri() {
 		String uri = null;
 		try {
@@ -48,7 +60,10 @@ public class ConfigProperties implements EnvironmentAware {
 		}
 		return uri;
 	}
-
+	/**
+	 *reads the Collection Name from property file
+	 *@return Collections Name as a String
+	 */
 	public String getCollection() {
 		String collectionName = null;
 		try {

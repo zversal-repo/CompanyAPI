@@ -8,4 +8,5 @@ public interface CompanyInfoService {
 	Document getEarningData(String ticker);
 	Document getSnapshot(String ticker);
 	Document getAnalystCoverage(String ticker);
+	Document getKeyStatsAndFinancials(String ticker);
 }
