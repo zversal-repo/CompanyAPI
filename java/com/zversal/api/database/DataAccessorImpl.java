@@ -44,9 +44,9 @@ public class DataAccessorImpl implements DataAccessor {
 	 * @return Iterable Documents
 	 */
 	@Override
-	public FindIterable<Document> FindDocWithTickerAndProjection(String ticker, String[] include) {
-		FindIterable<Document> doc = collection.find(new Document("Ticker", ticker))
-				.projection(Projections.fields(Projections.include(include), Projections.excludeId()));
+	public Document FindDocWithTickerAndProjection(String ticker, String[] include) {
+		Document doc = collection.find(new Document("Ticker", ticker))
+				.projection(Projections.fields(Projections.include(include), Projections.excludeId())).first();
 		return doc;
 	}
 

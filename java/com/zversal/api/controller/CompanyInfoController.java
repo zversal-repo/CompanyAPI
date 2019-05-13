@@ -4,10 +4,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import com.zversal.api.model.Users;
 import com.zversal.api.service.CompanyInfoServiceImpl;
+import com.zversal.api.service.CustomUserDetails;
 
 /**
  * This class exposes the REST API for the system.
@@ -23,13 +26,22 @@ import com.zversal.api.service.CompanyInfoServiceImpl;
 public class CompanyInfoController {
 	@Autowired
 	private CompanyInfoServiceImpl companyInfoService;
-
+    
+	@Autowired
+	private CustomUserDetails userDetails;
 	/**
 	 * This method will be used to get All Document which contains the Tickers given in parameter from method {@link com.zversal.api.service.CompanyInfoServiceImpl#getData(String)} .
 	 * @param ticker the unique id of the Document
 	 * @param response of Type HttpServletResponse provides HTTP-specific functionality in sending a response. 
 	 * @return a BSON Document
 	 */
+
+	@RequestMapping(value="/register",method=RequestMethod.POST)
+	public void registerUser(@RequestBody Users user) {
+		userDetails.SaveUserDetails(user);
+		//return "User is Registered Successfully";		
+	}
+	
 	@RequestMapping(value = "/data/{Ticker}", method = RequestMethod.GET)
 	public Document getDataApi(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
 		Document doc = companyInfoService.getData(ticker.toUpperCase());
@@ -115,6 +127,19 @@ public class CompanyInfoController {
 	@RequestMapping(value = "/keystatsandfinancials/{Ticker}", method = RequestMethod.GET)
 	public Document getKeyStatsAndFinancials(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
 		Document doc = companyInfoService.getKeyStatsAndFinancials(ticker.toUpperCase());
+		if (doc == null) {
+			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+			response.addHeader("Error", "No Content - Invalid Ticker");
+			return doc;
+		} else {
+			return doc;
+		}
+	}
+	
+	
+	@RequestMapping(value = "/financialhighlights/{Ticker}", method = RequestMethod.GET)
+	public Document getFinancialHighlights(@PathVariable("Ticker") String ticker, HttpServletResponse response) {
+		Document doc = companyInfoService.getFinancialHighlights(ticker.toUpperCase());
 		if (doc == null) {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.addHeader("Error", "No Content - Invalid Ticker");
